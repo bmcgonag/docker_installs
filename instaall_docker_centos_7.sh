@@ -2,7 +2,7 @@
 echo "Updating Packages..."
 echo ""
 echo ""
-slep 2s
+sleep 2s
 
 sudo yum check-update
 

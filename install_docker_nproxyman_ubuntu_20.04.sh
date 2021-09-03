@@ -81,7 +81,7 @@ echo ""
 mkdir nginx-proxy-manager
 cd nginx-proxy-manager
 
-curl https://raw.githubusercontent.com/bmcgonag/docker_installs/master/docker-compose.nginx_proxy_manager.yml -o docker-compose.yml
+curl https://raw.githubusercontent.com/bmcgonag/docker_installs/master/docker_compose.nginx_proxy_manager.yml -o docker-compose.yml
 echo ""
 echo ""
 

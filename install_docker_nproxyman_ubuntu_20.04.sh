@@ -91,7 +91,7 @@ echo "Running the docker-compose.yml to install and start NGinX Proxy Manager"
 echo ""
 echo ""
 
-docker-compose up -d
+sudo docker-compose up -d
 
 echo ""
 echo ""

@@ -9,10 +9,10 @@ installApps()
     echo ""
     echo ""
     
-    read -p "Docker-CE (y/n): " DOCK
-    read -p "Docker-Compose (y/n): " DCOMP
-    read -p "NGinX Proxy Manager (y/n): " NPM
-    read -p "Portainer-CE - Docker Management GUI (y/n): " PTAIN
+    read -rp "Docker-CE (y/n): " DOCK
+    read -rp "Docker-Compose (y/n): " DCOMP
+    read -rp "NGinX Proxy Manager (y/n): " NPM
+    read -rp "Portainer-CE - Docker Management GUI (y/n): " PTAIN
 
     echo "Updating Packages..."
     echo ""
@@ -34,7 +34,7 @@ installApps()
 
         sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
 
-        if [[ "$DOCK" == *[yY]* ]]; then
+        if [[ "$DOCK" == [yY] ]]; then
             echo ""
             echo ""
             echo "Retrieving Signing Keys for Docker..."
@@ -97,8 +97,8 @@ installApps()
     #######################################################
     ###              Install for CentOS 7               ###
     #######################################################
-    if [[ "$REPLY" == "1" ]]
-        if [[ "$DOCK" == *[yY]* ]]; then
+    if [[ "$REPLY" == "1" ]]; then
+        if [[ "$DOCK" == [yY] ]]; then
             sudo yum check-update
 
             echo ""
@@ -129,7 +129,7 @@ installApps()
         fi
     fi
 
-    if [[ "$DOCK" == *[yY]* ]]; then
+    if [[ "$DOCK" == [yY] ]]; then
         # add current user to docker group so sudo isn't needed
         echo ""
         echo ""
@@ -137,7 +137,7 @@ installApps()
         echo ""
         echo ""
         sleep 2s
-        sudo usermod -aG docker ${USER}
+        sudo usermod -aG docker "${USER}"
     fi
 
 
@@ -208,7 +208,13 @@ installApps()
         echo ""
         echo ""
 
-        sudo docker-compose up -d
+        if [[ "$REPLY" == "1" ]]; then
+          docker-compose up -d
+        fi
+
+        if [[ "$REPLY" != "1" ]]; then
+          sudo docker-compose up -d
+        fi
 
         echo ""
         echo ""
@@ -252,20 +258,20 @@ echo ""
 echo ""
 
 echo "Now, let's figure out which OS / Distro you are running."
-PS3 = "Please select the number for your OS / distro: "
+PS3="Please select the number for your OS / distro: "
 select _ in \
     "CentOS 7" \
     "Debian 10" \
     "Ubuntu 18.04" \
     "Ubuntu 20.04" \
-    "End this Installer" \
+    "End this Installer"
 do
-    CASE $REPLY in
-      1) installApps ;;
-      2) installApps ;;
-      3) installApps ;;
-      4) installApps ;;
-      5) return ;;
-      *) echo "Invalid selection, please try again..." ;;
-    ESAC
+  case $REPLY in
+    1) installApps ;;
+    2) installApps ;;
+    3) installApps ;;
+    4) installApps ;;
+    5) exit ;;
+    *) echo "Invalid selection, please try again..." ;;
+  esac
 done

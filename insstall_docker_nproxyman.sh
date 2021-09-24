@@ -188,10 +188,11 @@ installApps()
     fi
 
 
+    ##########################################
+    ###     Install NGinX Proxy Manager    ###
+    ##########################################
     if [[ "$NPM" == [yY] ]]; then
         # pull an nginx proxy manager docker-compose file from github
-        echo ""
-        echo ""
         echo "Pulling a default NGinX Proxy Manager docker-compose.yml file."
         echo ""
         echo ""
@@ -200,8 +201,6 @@ installApps()
         cd nginx-proxy-manager
 
         curl https://raw.githubusercontent.com/bmcgonag/docker_installs/master/docker_compose.nginx_proxy_manager.yml -o docker-compose.yml
-        echo ""
-        echo ""
 
         echo ""
         echo ""
@@ -227,11 +226,14 @@ installApps()
         cd
     fi
 
+
+    #####################################
+    ###      Install Portainer-CE     ###
+    #####################################
     if [[ "$PTAIN" == [yY] ]]; then
-        # pull an nginx proxy manager docker-compose file from github
-        echo ""
-        echo ""
         echo "Preparing to Install Portainer-CE"
+        echo ""
+        echo ""
 
         sudo docker volume create portainer_data
         sudo docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce

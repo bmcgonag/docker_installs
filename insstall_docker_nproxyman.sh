@@ -252,12 +252,13 @@ installApps()
         echo ""
         sleep 5s
     fi
+    exit 1
 }
 
 echo ""
 echo ""
 
-echo "Now, let's figure out which OS / Distro you are running."
+echo "Let's figure out which OS / Distro you are running."
 PS3="Please select the number for your OS / distro: "
 select _ in \
     "CentOS 7" \

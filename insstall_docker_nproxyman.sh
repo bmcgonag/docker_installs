@@ -1,4 +1,36 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+if [ "${EUID}" -ne 0 ]; then
+    echo "You need to run this script with sudo."
+    exit
+fi
+
+# If want to automate you can input to DIST_RUN, else just remove below.
+#CHECK_DIST() {
+#  if [ -f /etc/os-release ]; then
+#    # shellcheck disable=SC1091
+#    source /etc/os-release
+#    DISTRO=${ID}
+#    DISTRO_VERSION=${VERSION_ID}
+#  fi
+#}
+
+#DIST_RUN() {
+#  if { [ "${DISTRO}" == "ubuntu" ] || [ "${DISTRO}" == "debian" ] || [ "${DISTRO}" == "raspbian" ] || [ "${DISTRO}" == "pop" ] || [ "${DISTRO}" == "kali" ] || [ "${DISTRO}" == "linuxmint" ] || [ "${DISTRO}" == "neon" ]; }; then
+#echo "RUN DEB"
+#elif { [ "${DISTRO}" == "fedora" ] || [ "${DISTRO}" == "centos" ] || [ "${DISTRO}" == "rhel" ] || [ "${DISTRO}" == "almalinux" ] || [ "${DISTRO}" == "rocky" ]; }; then
+#echo "RUN RPM"
+#elif { [ "${DISTRO}" == "arch" ] || [ "${DISTRO}" == "archarm" ] || [ "${DISTRO}" == "manjaro" ]; }; then
+#echo "RUN PAC"
+#elif [ "${DISTRO}" == "alpine" ]; then
+#echo "RUN APK"
+#elif [ "${DISTRO}" == "freebsd" ]; then
+#echo "RUN PKG"
+#else
+#echo "Error: ${DISTRO} is not supported."
+#    exit 1
+#  fi
+#}
 
 installApps()
 {
@@ -24,7 +56,7 @@ installApps()
     #######################################################
 
     if [[ "$REPLY" != "1" ]]; then
-        sudo apt update
+        apt update
         echo ""
         echo ""
         echo "Install Prerequisite Packages..."
@@ -32,7 +64,7 @@ installApps()
         echo ""
         sleep 2s
 
-        sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+        apt install apt-transport-https ca-certificates curl software-properties-common -y
 
         if [[ "$DOCK" == [yY] ]]; then
             echo ""
@@ -43,7 +75,7 @@ installApps()
             sleep 2s
 
             if [[ "$REPLY" == 2 ]]; then
-                curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+                curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
 
                 echo ""
                 echo ""
@@ -52,11 +84,11 @@ installApps()
                 echo ""
                 sleep 2s
 
-                sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+                add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
             fi
 
             if [[ "$REPLY" == "3" ]]; then
-                curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+                curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
                 echo ""
                 echo ""
@@ -65,11 +97,11 @@ installApps()
                 echo ""
                 sleep 2s
 
-                sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+                add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
             fi
 
             if [[ "$REPLY" == "4" ]]; then
-                curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+                curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
                 echo ""
                 echo ""
@@ -78,10 +110,10 @@ installApps()
                 echo ""
                 sleep 2s
 
-                sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+                add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
             fi
-            sudo apt update
-            sudo apt-cache policy docker-ce
+            apt update
+            apt-cache policy docker-ce
 
             echo ""
             echo ""
@@ -90,7 +122,7 @@ installApps()
             echo ""
             sleep 2s
 
-            sudo apt install docker-ce -y
+            apt install docker-ce -y
         fi
     fi
 
@@ -99,7 +131,7 @@ installApps()
     #######################################################
     if [[ "$REPLY" == "1" ]]; then
         if [[ "$DOCK" == [yY] ]]; then
-            sudo yum check-update
+            yum check-update
 
             echo ""
             echo ""
@@ -116,7 +148,7 @@ installApps()
             echo ""
             sleep 2s
 
-            sudo systemctl start docker
+            systemctl start docker
 
             echo ""
             echo ""
@@ -125,7 +157,7 @@ installApps()
             echo ""
             sleep 2s
 
-            sudo systemctl enable docker
+            systemctl enable docker
         fi
     fi
 
@@ -137,7 +169,9 @@ installApps()
         echo ""
         echo ""
         sleep 2s
-        sudo usermod -aG docker "${USER}"
+        usermod -aG docker "${USER}"
+        echo "Reboot/re-login required to apply changes."
+
     fi
 
 
@@ -159,7 +193,7 @@ installApps()
         ######################################        
         
         if [[ "$REPLY" != "1" ]]; then
-            sudo apt install docker-compose -y
+            apt install docker-compose -y
 
             echo ""
             echo ""
@@ -173,9 +207,9 @@ installApps()
         ######################################
 
         if [[ "$REPLY" == "1" ]]; then
-            sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
-            sudo chmod +x /usr/local/bin/docker-compose
+            chmod +x /usr/local/bin/docker-compose
         fi
 
         echo ""
@@ -213,7 +247,7 @@ installApps()
         fi
 
         if [[ "$REPLY" != "1" ]]; then
-          sudo docker-compose up -d
+           docker-compose up -d
         fi
 
         echo ""
@@ -237,15 +271,29 @@ installApps()
     ###      Install Portainer-CE     ###
     #####################################
     if [[ "$PTAIN" == [yY] ]]; then
-        echo "Preparing to Install Portainer-CE"
+        echo -e "By default, Portainer Server will expose the UI over port 9443 and expose a TCP tunnel server over port 8000\n"
+        echo "What do you want to do?"
+        echo "   1) Expose 9443 and generate a self-signed SSL (Default)"
+        echo "   2) Expose 9000 (Legacy)"
+        echo "   3) Expose both ports (If you require HTTP port 9000 open for legacy reasons)"
+        until [[ "${port_choice}" =~ ^[0-9]+$ ]] && [ "${port_choice}" -ge 1 ] && [ "${port_choice}" -le 3 ]; do
+            read -rp "Select: [1-3]:" -e -i 1 port_choice
+        done
+        case "${port_choice}" in
+            1) ports='-p 9443:9443' ;;
+            2) ports='-p 9000:9000' ;;
+            3) ports='-p 9443:9443 -p 9000:9000' ;;
+        esac
+
+        echo -e "Preparing to Install Portainer-CE\n"
         echo ""
         echo ""
 
-        sudo docker volume create portainer_data
-        sudo docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+        docker volume create portainer_data
+        docker run -d -p 8000:8000 $ports --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
         echo ""
         echo ""
-        echo "Navigate to your server hostname / IP address on port 9000 and create your admin account for Portainer-CE"
+        echo "Navigate to your server hostname / IP address on chosen ports and create your admin account for Portainer-CE"
 
         echo ""
         echo ""

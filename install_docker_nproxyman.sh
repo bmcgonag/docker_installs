@@ -93,13 +93,13 @@ startInstall()
             #### add the Debian 10 Buster key
             if [[ "$OS" == 2 ]]; then
                 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - >> ~/docker-script-install.log 2>&1
-                sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" >> ~/docker-script-install.log 2>&1
+                sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" -y >> ~/docker-script-install.log 2>&1
             fi
 
             if [[ "$OS" == 3 ]] || [[ "$OS" == 4 ]]; then
                 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - >> ~/docker-script-install.log 2>&1
 
-                sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" >> ~/docker-script-install.log 2>&1
+                sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" -y >> ~/docker-script-install.log 2>&1
             fi
 
             sudo apt update >> ~/docker-script-install.log 2>&1
@@ -110,7 +110,7 @@ startInstall()
 
             sudo apt install docker-ce -y >> ~/docker-script-install.log 2>&1
 
-                echo "        docker-ce version is now:"
+                echo "- docker-ce version is now:"
             docker -v
             sleep 5s
 
@@ -152,13 +152,11 @@ startInstall()
     if [[ "$DOCK" == [yY] ]]; then
         # add current user to docker group so sudo isn't needed
         echo ""
-        echo ""
-        echo "Attempting to add the currently logged in user to the docker group..."
-        echo ""
-        echo ""
+        echo "  - Attempting to add the currently logged in user to the docker group..."
+
         sleep 2s
         sudo usermod -aG docker "${USER}" >> ~/docker-script-install.log 2>&1
-        echo "You'll need to log out and back in to finalize the addition of your user to the docker group."
+        echo "  - You'll need to log out and back in to finalize the addition of your user to the docker group."
         echo ""
         echo ""
         sleep 3s
@@ -196,7 +194,7 @@ startInstall()
 
         echo ""
 
-        echo "Docker Compose Version is now: "
+        echo "- Docker Compose Version is now: " 
         docker-compose --version
         echo ""
         echo ""

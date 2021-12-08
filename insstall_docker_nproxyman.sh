@@ -12,7 +12,7 @@ installApps()
     
     ISACT=`sudo systemctl is-active docker`
     ISCOMP=`docker-compose -v`
-    COMPNO = "command not found"
+    COMPNO="command not found"
 
     #### Try to check whether docker is installed and running - don't prompt if it is
     if [[ "$ISACT" != "active" ]]; then

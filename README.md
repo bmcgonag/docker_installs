@@ -40,11 +40,11 @@ Before prompting to install Docker or Docker-Compose, I do try to see if you alr
 2. Imrpoved the Debian 11 wait time for the Docker service to start up and be running.
 
 ## Future Work
-[ ] Make it work for Raspberry Pi
-[ ] Make it work for Arch
-[ ] Make it work for OpenSuse
-[ ] Maybe add a few other default containers to pull down and start running
-[ ] Prompt for Credentials to use in NGinX Proxy Manager db settings vs. using the defaults.
+- [ ] Make it work for Raspberry Pi
+- [ ] Make it work for Arch
+- [ ] Make it work for OpenSuse
+- [ ] Maybe add a few other default containers to pull down and start running
+- [ ] Prompt for Credentials to use in NGinX Proxy Manager db settings vs. using the defaults.
 
 ## Contributing
 If you find issues, please let me know. I'm always open to new contributors helping me add Distro support, more software packages, etc.  Just clone the project and make a pull request with any changes you add. 

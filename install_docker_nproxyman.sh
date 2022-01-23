@@ -81,34 +81,36 @@ startInstall()
             sleep .1
         done
         printf "\r"
-        echo "    2. Install Prerequisite Packages..."
-        sleep 2s
+        # echo "    2. Install Prerequisite Packages..."
+        # sleep 2s
 
-        sudo apt install apt-transport-https ca-certificates curl software-properties-common -y >> ~/docker-script-install.log 2>&1
+        # sudo apt install apt-transport-https ca-certificates curl software-properties-common -y >> ~/docker-script-install.log 2>&1
 
-        if [[ "$DOCK" == [yY] ]]; then
-            echo "    3. Retrieving Signing Keys for Docker... and adding the Docker-CE repository..."
+        # if [[ "$DOCK" == [yY] ]]; then
+        #     echo "    3. Retrieving Signing Keys for Docker... and adding the Docker-CE repository..."
+        #     sleep 2s
+
+        #     #### add the Debian 10 Buster key
+        #     if [[ "$OS" == 2 ]]; then
+        #         curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - >> ~/docker-script-install.log 2>&1
+        #         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" -y >> ~/docker-script-install.log 2>&1
+        #     fi
+
+        #     if [[ "$OS" == 3 ]] || [[ "$OS" == 4 ]]; then
+        #         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - >> ~/docker-script-install.log 2>&1
+
+        #         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" -y >> ~/docker-script-install.log 2>&1
+        #     fi
+
+        #     sudo apt update >> ~/docker-script-install.log 2>&1
+        #     sudo apt-cache policy docker-ce >> ~/docker-script-install.log 2>&1
+
+            echo "    2. Installing Docker-CE (Community Edition)..."
             sleep 2s
 
-            #### add the Debian 10 Buster key
-            if [[ "$OS" == 2 ]]; then
-                curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - >> ~/docker-script-install.log 2>&1
-                sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" -y >> ~/docker-script-install.log 2>&1
-            fi
+            #sudo apt install docker-ce -y >> ~/docker-script-install.log 2>&1
 
-            if [[ "$OS" == 3 ]] || [[ "$OS" == 4 ]]; then
-                curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - >> ~/docker-script-install.log 2>&1
-
-                sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" -y >> ~/docker-script-install.log 2>&1
-            fi
-
-            sudo apt update >> ~/docker-script-install.log 2>&1
-            sudo apt-cache policy docker-ce >> ~/docker-script-install.log 2>&1
-
-            echo "    4. Installing Docker-CE (Community Edition)..."
-            sleep 2s
-
-            sudo apt install docker-ce -y >> ~/docker-script-install.log 2>&1
+            curl -fsSL https://get.docker.com | sh >> ~/docker-script-install.log 2>&1
 
                 echo "- docker-ce version is now:"
             docker -v
@@ -118,7 +120,7 @@ startInstall()
                 echo "    5. Starting Docker Service"
                 sudo systemctl docker start >> ~/docker-script-install.log 2>&1
             fi
-        fi
+        # fi
     fi
         
     

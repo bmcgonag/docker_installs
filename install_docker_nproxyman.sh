@@ -32,6 +32,7 @@ installApps()
 
     read -rp "NGinX Proxy Manager (y/n): " NPM
     read -rp "Navidrome (y/n): " NAVID
+    read -rp "Speedtest - recurring internet speedtest (y/n): " SPDTST
     read -rp "Portainer-CE (y/n): " PTAIN
 
     if [[ "$PTAIN" == [yY] ]]; then
@@ -336,6 +337,39 @@ startInstall()
         echo ""
         echo "    Navigate to your server hostname / IP address on port 4533 to setup"
         echo "    your new Navidrome admin account."
+        echo ""      
+        sleep 3s
+        cd
+    fi
+
+    if [[ "$SPDTST" == [yY] ]]; then
+        echo "###########################################"
+        echo "###         Installing Speedtest        ###"
+        echo "###########################################"
+        echo ""
+        echo "    1. Preparing to install Speedtest"
+
+        mkdir docker-speedtest-grafana
+        cd docker-speedtest-grafana
+
+        curl https://raw.githubusercontent.com/bmcgonag/docker_installs/master/docker-compose_speedtest_grafana.yml -o docker-compose.yml >> ~/docker-script-install.log 2>&1
+
+        echo "    2. Running the docker-compose.yml to install and start Speedtest"
+        echo ""
+        echo ""
+
+        if [[ "$OS" == "1" ]]; then
+          docker-compose up -d
+        fi
+
+        if [[ "$OS" != "1" ]]; then
+          sudo docker-compose up -d
+        fi
+
+        echo ""
+        echo ""
+        echo "    Navigate to your server hostname / IP address on port 3030 to view"
+        echo "    Speedtest data as it collects over time."
         echo ""      
         sleep 3s
         cd

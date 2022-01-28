@@ -20,6 +20,8 @@ Next, you'll be asked to answer "y" to any of the four software packages you'd l
 - Docker-CE
 - Docker-Compose
 - NGinx Proxy Manager
+- Navidrome (music player)
+- Speedtest (recurring internet speedtest)
 - Portainer-CE
   - if you answer y to Portainer, you'll be asked another question
 

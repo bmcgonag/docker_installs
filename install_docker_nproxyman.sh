@@ -31,6 +31,7 @@ installApps()
     fi
 
     read -rp "NGinX Proxy Manager (y/n): " NPM
+    read -rp "Navidrome (y/n): " NAVID
     read -rp "Portainer-CE (y/n): " PTAIN
 
     if [[ "$PTAIN" == [yY] ]]; then
@@ -306,6 +307,40 @@ startInstall()
         echo ""
         sleep 3s
     fi
+
+    if [[ "$NAVID" == [yY] ]]; then
+        echo "###########################################"
+        echo "###        Installing Navidrome         ###"
+        echo "###########################################"
+        echo ""
+        echo "    1. Preparing to install Navidrome"
+
+        mkdir navidrome
+        cd navidrome
+
+        curl https://raw.githubusercontent.com/bmcgonag/docker_installs/master/docker_compose_navidrome.yml -o docker-compose.yml >> ~/docker-script-install.log 2>&1
+
+        echo "    2. Running the docker-compose.yml to install and start Navidrome"
+        echo ""
+        echo ""
+
+        if [[ "$OS" == "1" ]]; then
+          docker-compose up -d
+        fi
+
+        if [[ "$OS" != "1" ]]; then
+          sudo docker-compose up -d
+        fi
+
+        echo ""
+        echo ""
+        echo "    Navigate to your server hostname / IP address on port 4533 to setup"
+        echo "    your new Navidrome admin account."
+        echo ""      
+        sleep 3s
+        cd
+    fi
+
     exit 1
 }
 

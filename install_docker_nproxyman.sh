@@ -268,9 +268,9 @@ startInstall()
     fi
 
     if [[ "$PORT" == "1" ]]; then
-    echo "########################################"
-    echo "###      Installing Portainer-CE     ###"
-    echo "########################################"
+        echo "########################################"
+        echo "###      Installing Portainer-CE     ###"
+        echo "########################################"
         echo ""
         echo "    1. Preparing to Install Portainer-CE"
         echo ""
@@ -289,9 +289,9 @@ startInstall()
     fi
 
     if [[ "$PORT" == "2" ]]; then
-        echo "########################################"
-        echo "###      Installing Portainer-CE     ###"
-        echo "########################################"
+        echo "###########################################"
+        echo "###      Installing Portainer Agent     ###"
+        echo "###########################################"
         echo ""
         echo "    1. Preparing to install Portainer Agent"
 

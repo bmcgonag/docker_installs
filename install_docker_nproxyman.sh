@@ -153,6 +153,41 @@ startInstall()
         fi
     fi
 
+    #######################################################
+    ###               Install for Arch Linux            ###
+    #######################################################
+
+    if [[ "$OS" == "5" ]]; then
+        read -rp "Do you want to install system updates prior to installing Docker-CE? (y/n): " UPDARCH
+        if [[ "UPDARCH" == [yY] ]]; then
+            echo "    1. Installing System Updates... this may take a while...be patient."
+            (sudo pacman -Syu) > ~/docker-script-install.log 2>&1 &
+            ## Show a spinner for activity progress
+            pid=$! # Process Id of the previous running command
+            spin='-\|/'
+            i=0
+            while kill -0 $pid 2>/dev/null
+            do
+                i=$(( (i+1) %4 ))
+                printf "\r${spin:$i:1}"
+                sleep .1
+            done
+            printf "\r"
+        else
+            echo "    1. Skipping system update..."
+            sleep 2s
+        fi
+
+        echo "    2. Installing Docker-CE (Community Edition)..."
+            sleep 2s
+
+            curl -fsSL https://get.docker.com | sh >> ~/docker-script-install.log 2>&1
+
+            echo "    - docker-ce version is now:"
+            docker -v
+            sleep 5s
+    fi
+
     if [[ "$DOCK" == [yY] ]]; then
         # add current user to docker group so sudo isn't needed
         echo ""
@@ -397,6 +432,7 @@ select _ in \
     "Debian 10/11 (Buster / Bullseye)" \
     "Ubuntu 18.04 (Bionic)" \
     "Ubuntu 20.04 / 21.04 (Focal)/(Hirsute)" \
+    "Arch Linux" \
     "End this Installer"
 do
   case $REPLY in
@@ -404,7 +440,8 @@ do
     2) installApps ;;
     3) installApps ;;
     4) installApps ;;
-    5) exit ;;
+    5) installApps ;;
+    6) exit ;;
     *) echo "Invalid selection, please try again..." ;;
   esac
 done

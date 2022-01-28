@@ -1,4 +1,4 @@
-ersion: '2'
+version: '2'
 
 services:
   influxdb:
@@ -19,7 +19,7 @@ services:
     volumes:
       - "./docker-speedtest-grafana/grafana/provisioning:/etc/grafana/provisioning"
     ports:
-      - "3030:3000"
+      - 3030:3000
     environment:
       - "GF_SERVER_ROOT_URL=http://localhost"
       - "GF_SECURITY_ADMIN_PASSWORD=admin"

@@ -2,6 +2,7 @@
 
 installApps()
 {
+    clear
     OS="$REPLY" ## <-- This $REPLY is about OS Selection
     echo "We can install Docker-CE, Docker-Compose, NGinX Proxy Manager, and Portainer-CE."
     echo "Please select 'y' for each item you would like to install."
@@ -59,6 +60,7 @@ installApps()
 
 startInstall() 
 {
+    clear
     echo "#######################################################"
     echo "###         Preparing for Installation              ###"
     echo "#######################################################"
@@ -273,10 +275,10 @@ startInstall()
         # pull an nginx proxy manager docker-compose file from github
         echo "    1. Pulling a default NGinX Proxy Manager docker-compose.yml file."
 
-        mkdir nginx-proxy-manager
-        cd nginx-proxy-manager
+        mkdir -p docker/nginx-proxy-manager
+        cd docker/nginx-proxy-manager
 
-        curl https://raw.githubusercontent.com/bmcgonag/docker_installs/master/docker_compose.nginx_proxy_manager.yml -o docker-compose.yml >> ~/docker-script-install.log 2>&1
+        curl https://gitlab.com/bmcgonag/docker_installs/-/raw/main/docker_compose.nginx_proxy_manager.yml -o docker-compose.yml >> ~/docker-script-install.log 2>&1
 
         echo "    2. Running the docker-compose.yml to install and start NGinX Proxy Manager"
         echo ""
@@ -351,10 +353,10 @@ startInstall()
         echo ""
         echo "    1. Preparing to install Navidrome"
 
-        mkdir navidrome
-        cd navidrome
+        mkdir -p docker/navidrome
+        cd docker/navidrome
 
-        curl https://raw.githubusercontent.com/bmcgonag/docker_installs/master/docker_compose_navidrome.yml -o docker-compose.yml >> ~/docker-script-install.log 2>&1
+        curl https://gitlab.com/bmcgonag/docker_installs/-/raw/main/docker_compose_navidrome.yml -o docker-compose.yml >> ~/docker-script-install.log 2>&1
 
         echo "    2. Running the docker-compose.yml to install and start Navidrome"
         echo ""
@@ -384,10 +386,10 @@ startInstall()
         echo ""
         echo "    1. Preparing to install Speedtest"
 
-        mkdir docker-speedtest-grafana
-        cd docker-speedtest-grafana
+        mkdir -p docker/docker-speedtest-grafana
+        cd docker/docker-speedtest-grafana
 
-        curl https://raw.githubusercontent.com/bmcgonag/docker_installs/master/docker-compose_speedtest_grafana.yml -o docker-compose.yml >> ~/docker-script-install.log 2>&1
+        curl https://gitlab.com/bmcgonag/docker_installs/-/raw/main/docker-compose_speedtest_grafana.yml -o docker-compose.yml >> ~/docker-script-install.log 2>&1
 
         echo "    2. Running the docker-compose.yml to install and start Speedtest"
         echo ""
@@ -416,22 +418,25 @@ startInstall()
 echo ""
 echo ""
 
+clear
+
 echo "Let's figure out which OS / Distro you are running."
 echo ""
 echo ""
 echo "    From some basic information on your system, you appear to be running: "
-echo "        " $(lsb_release -i)
-echo "        " $(lsb_release -d)
-echo "        " $(lsb_release -r)
-echo "        " $(lsb_release -c)
+echo "        --  OpSys        " $(lsb_release -i)
+echo "        --  Desc:        " $(lsb_release -d)
+echo "        --  OSVer        " $(lsb_release -r)
+echo "        --  CdNme        " $(lsb_release -c)
 echo ""
+echo "------------------------------------------------"
 echo ""
 PS3="Please select the number for your OS / distro: "
 select _ in \
     "CentOS 7 and 8" \
     "Debian 10/11 (Buster / Bullseye)" \
     "Ubuntu 18.04 (Bionic)" \
-    "Ubuntu 20.04 / 21.04 (Focal)/(Hirsute)" \
+    "Ubuntu 20.04 / 21.04 (Focal / Hirsute)" \
     "Arch Linux" \
     "End this Installer"
 do

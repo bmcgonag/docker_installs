@@ -436,7 +436,7 @@ select _ in \
     "CentOS 7 and 8" \
     "Debian 10/11 (Buster / Bullseye)" \
     "Ubuntu 18.04 (Bionic)" \
-    "Ubuntu 20.04 / 21.04 (Focal / Hirsute)" \
+    "Ubuntu 20.04 / 21.04 / 22.04 (Focal / Hirsute / Jammy)" \
     "Arch Linux" \
     "End this Installer"
 do
